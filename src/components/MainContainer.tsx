@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Movie, Header, GenreMap } from '../types';
 import GenrePanel from './GenrePanel';
+import InfoModal from './InfoModal';
 
 const MainContainer = () => {
   const [movies, setMovies] = useState<Movie[]>([]); //All movies array that doesn't change
@@ -8,6 +9,9 @@ const MainContainer = () => {
   const [masterGenre, setMasterGenre] = useState<GenreMap>({}); //Object that tracks selected genres and selection
   const [isLoading, setIsLoading] = useState<boolean>(true); //Loading state
   const [isError, setIsError] = useState<string | null>(null); //Error state
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null); //Selected movie state
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); //Modal state
+
 
   //Fetch all movies from API
   const fetchAllMovies = async () => {
@@ -17,7 +21,7 @@ const MainContainer = () => {
     const response = await fetch('https://code-challenge.spectrumtoolbox.com/api/movies', { headers });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    };
 
     //Extracting data from response
     const data = await response.json();
@@ -55,20 +59,36 @@ const MainContainer = () => {
     fetchAllMovies();
   }, []);
 
+  const handleInfoModal = (movie: Movie) : void => {
+    setSelectedMovie(movie);
+    setIsModalOpen(true);
+  };
+
+  const closeInfoModal = () : void => {
+    setIsModalOpen(false);
+    setSelectedMovie(null);
+  };
+
   //Render a movie container for each movie in filteredMovies
   const movieContainer:JSX.Element[] = filteredMovies.map((movie: Movie) => {
     //This try/catch logic is not ideal: stretch goal would be to correct
     try {
       return (
         <div className="movie-item" key={movie.id}>
-          <div className="movie-title">{movie.title}</div>
-          <img src={require(`../assets/img/poster/${movie.id}.jpeg`)} alt={movie.title} className="movie-poster" />
+          <div className="movie-header">
+            <div className="movie-title">{movie.title}</div>
+              <button className="more-info-button" onClick={() => handleInfoModal(movie)}>ℹ</button>
+            </div>
+            <img src={require(`../assets/img/poster/${movie.id}.jpeg`)} alt={movie.title} className="movie-poster" />
         </div>
       )
     } catch (e) {
         return (
           <div className="movie-item" key={movie.id}>
-            <div className="movie-title">{movie.title}</div>
+            <div className="movie-header">
+              <div className="movie-title">{movie.title}</div>
+                <button className="more-info-button" onClick={() => handleInfoModal(movie)}>ℹ</button>
+            </div>
             <img src={require(`../assets/img/poster/defaultImage.jpeg`)} alt={movie.title} className="movie-poster" />
           </div>
         )
@@ -89,6 +109,7 @@ const MainContainer = () => {
             {movieContainer}
         </div>
       </div>
+      <InfoModal selectedMovie ={selectedMovie} setSelectedMovie = {setSelectedMovie} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} closeInfoModal={closeInfoModal} />
     </div>
   )
 };
