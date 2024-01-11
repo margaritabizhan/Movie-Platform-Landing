@@ -54,9 +54,7 @@ body {
 .genre-panel {
   flex: 1;
   background-color: var(--secondary-color);
-  border-radius: 3px;
   padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Styles for individual movie items */
@@ -65,7 +63,15 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  max-height: 350px;
+  max-height: 400px;
+}
+
+/* Styles for the movie header */
+.movie-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 /* Styles for movie items */
@@ -90,14 +96,12 @@ body {
   width: 100%;
   max-height: 300px;
   object-fit: cover;
-
 }
 
 /*Styles for the GenrePanel component */
 .genre-panel {
   background-color: var(--primary-color);
   padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Style for the genre buttons container */
@@ -123,12 +127,88 @@ body {
 .button:hover {
   background-color: #555;
 }
-
+/* Active state for genre buttons */
 .active-button {
   background-color: var(--secondary-color);
 }
-
+/* Styles for the genre buttons list */
 .genre-buttons ul {
   list-style-type: none;
   padding: 0;
+}
+
+/* Styles for modal */
+.modal-backdrop {
+  position: fixed;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  width: 70%;
+  height: 80%;
+  background-color: rgb(19, 19, 48);
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  z-index: 10;
+}
+
+.modal-content {
+  padding: 20px;
+  z-index: 11;
+}
+
+/* Styles for modal header */
+.modal-header {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-left: 20px;
+  flex-grow: 1;
+}
+/* Styles for the modal close button */
+.close-button {
+  font-size: 1.5em;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: var(--font-color);
+  transition: background-color 0.2s;
+  margin-left: auto;
+}
+
+.close-button:hover {
+  background-color: #6f6f6f;
+}
+
+.modal-picture {
+  max-width: 100%;
+  max-height: auto;
+  object-fit: cover;
+}
+
+/* Styles for the search bar */
+.search-container {
+  margin-bottom: 20px;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.search-input {
+  height: 40px;
+}
+
+.search-bar input {
+  width: 80%;
+  font-size: medium;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }

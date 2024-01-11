@@ -6,13 +6,18 @@ interface InfoModalProps {
   setSelectedMovie: React.Dispatch<React.SetStateAction<Movie | null>>;
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  closeInfoModal: () => void;
 };
 
-const InfoModal: React.FC<InfoModalProps> = ({ selectedMovie, setSelectedMovie, isModalOpen, setIsModalOpen, closeInfoModal }) => {
+const InfoModal: React.FC<InfoModalProps> = ({ selectedMovie, setSelectedMovie, isModalOpen, setIsModalOpen }) => {
   if(!isModalOpen || !selectedMovie) return null;
 
+    //Function to close modal and reset selected movie
+    const closeInfoModal = () : void => {
+      setIsModalOpen(false);
+      setSelectedMovie(null);
+    };
 
+  //Again not ideal logic to access picture and display default image if not found
   let modalMovieImage : JSX.Element | null = null;
   const displayPicture = () :void => {
     try {
@@ -23,6 +28,7 @@ const InfoModal: React.FC<InfoModalProps> = ({ selectedMovie, setSelectedMovie, 
   };
   displayPicture();
   
+  //Render a genre for each genre in selectedMovie
   const displayGenres: JSX.Element[] = selectedMovie.genres.map((genre) => {
     return (
       <div key={genre} className="modal-genre">{genre}</div>

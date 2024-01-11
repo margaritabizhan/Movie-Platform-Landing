@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Movie, Header, GenreMap } from '../types';
 import GenrePanel from './GenrePanel';
 import InfoModal from './InfoModal';
+import SearchBar from './SearcBar';
 
 const MainContainer = () => {
   const [movies, setMovies] = useState<Movie[]>([]); //All movies array that doesn't change
@@ -11,7 +12,7 @@ const MainContainer = () => {
   const [isError, setIsError] = useState<string | null>(null); //Error state
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null); //Selected movie state
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); //Modal state
-
+  const [searchInput, setSearchInput] = useState<string>(''); //Search input state
 
   //Fetch all movies from API
   const fetchAllMovies = async () => {
@@ -59,14 +60,10 @@ const MainContainer = () => {
     fetchAllMovies();
   }, []);
 
+  //Function to open modal and set selected movie
   const handleInfoModal = (movie: Movie) : void => {
     setSelectedMovie(movie);
     setIsModalOpen(true);
-  };
-
-  const closeInfoModal = () : void => {
-    setIsModalOpen(false);
-    setSelectedMovie(null);
   };
 
   //Render a movie container for each movie in filteredMovies
@@ -101,15 +98,22 @@ const MainContainer = () => {
         {isLoading ? <p>Loading...</p> : null}
         {isError ? <p>{isError}</p> : null}
       </div>
+    <SearchBar movies={movies} filteredMovies={filteredMovies} setFilteredMovies={setFilteredMovies} searchInput={searchInput} setSearchInput={setSearchInput} />
       <div className="content">
         <div className="genre-panel">
           <GenrePanel masterGenre={masterGenre} setMasterGenre={setMasterGenre} movies={movies} filteredMovies={filteredMovies} setFilteredMovies={setFilteredMovies} />
         </div>
         <div className="movie-container">
-            {movieContainer}
+            {filteredMovies.length === 0 ? (
+            <div>
+              <img src={require(`../assets/img/sad-cat.png`)} alt="Sad Cat" />
+              <p>No movies are found, try again...</p>
+            </div>
+            )
+             : movieContainer}
         </div>
       </div>
-      <InfoModal selectedMovie ={selectedMovie} setSelectedMovie = {setSelectedMovie} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} closeInfoModal={closeInfoModal} />
+      <InfoModal selectedMovie ={selectedMovie} setSelectedMovie = {setSelectedMovie} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </div>
   )
 };
