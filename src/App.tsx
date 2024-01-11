@@ -1,9 +1,12 @@
+import React from 'react';
+import MainContainer from './components/MainContainer';
 import './styles.css';
 
 function App() {
   return (
     <div className="App">
-     <p>React App</p>
+     <h1>Home</h1>
+     <MainContainer />
     </div>
   );
 }
