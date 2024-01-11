@@ -8,7 +8,7 @@ interface GenrePanelProps {
   movies: Movie[];
   filteredMovies: Movie[];
   setFilteredMovies: React.Dispatch<React.SetStateAction<Movie[]>>;
-}
+};
 
 const GenrePanel: React.FC<GenrePanelProps> = ({ masterGenre, setMasterGenre, movies, filteredMovies, setFilteredMovies }) => {
 
