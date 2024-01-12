@@ -4,7 +4,7 @@ import GenrePanel from './GenrePanel';
 import InfoModal from './InfoModal';
 import SearchBar from './SearcBar';
 
-const MainContainer = () => {
+const MainContainer: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]); //All movies array that doesn't change
   const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]); //Filtered movies that will be displayed
   const [masterGenre, setMasterGenre] = useState<GenreMap>({}); //Object that tracks selected genres and selection
@@ -15,7 +15,7 @@ const MainContainer = () => {
   const [searchInput, setSearchInput] = useState<string>(''); //Search input state
 
   //Fetch all movies from API
-  const fetchAllMovies = async () => {
+  const fetchAllMovies = async (): Promise<void> => {
     const headers: Header = {'Authorization': 'Api-Key q3MNxtfep8Gt'};
     
     try {
@@ -26,7 +26,7 @@ const MainContainer = () => {
 
     //Extracting data from response
     const data = await response.json();
-    const fullListMovies = data.data;
+    const fullListMovies: Movie[]= data.data;
 
     //Store movies in movies state that won't be altered
     setMovies([...fullListMovies]);
@@ -36,16 +36,15 @@ const MainContainer = () => {
 
     //Create a set of all genres with default false to genre selection
     const genreSet: GenreMap = {};
-    for (let i = 0; i < fullListMovies.length; i++) {
-      const movie = fullListMovies[i];
-      const genres = movie.genres;
+    for (let i: number = 0; i < fullListMovies.length; i++) {
+      const movie = fullListMovies[i] as Movie;
+      const genres: string[] = movie.genres;
       
-      for (let j = 0; j < genres.length; j++) {
+      for (let j: number = 0; j < genres.length; j++) {
         const genre = genres[j];
         genreSet[genre] = false;
       };
     };
-
     setMasterGenre(genreSet);
 
     //Error handling for fetch
@@ -60,8 +59,48 @@ const MainContainer = () => {
     fetchAllMovies();
   }, []);
 
+  //Function for genre and serach filtering
+  const applyFilters = (): void => {
+    //Filter by genre
+    //Extract selected genres from masterGenre and store in array
+    const selectedGenres: string[] = Object.keys(masterGenre).filter(
+      (genre) => masterGenre[genre]
+    );
+    
+    let updateFilteredMovies: Movie[] = [];
+    //If no genres are selected, include all movies
+    if (selectedGenres.length === 0) {
+      updateFilteredMovies = [...movies];
+    } else {
+    //Filter movies by selected genres
+      updateFilteredMovies = movies.filter((movie: Movie) => {
+        const genres: string[] = movie.genres;
+        for (let i: number = 0; i < genres.length; i++) {
+          if (selectedGenres.includes(genres[i])) {
+            return true;
+          };
+        };
+        return false;
+      });
+    };
+
+    //If user input is not empty, search by name
+    if(searchInput) {
+      const userInput: string = searchInput.toLowerCase();
+      updateFilteredMovies = updateFilteredMovies.filter((movie: Movie) => {
+        const title: string = movie.title.toLowerCase();
+        return title.includes(userInput);
+      });
+    };
+  setFilteredMovies(updateFilteredMovies);
+  };
+
+  useEffect(() => {
+    applyFilters();
+  },[masterGenre, searchInput])
+
   //Function to open modal and set selected movie
-  const handleInfoModal = (movie: Movie) : void => {
+  const handleInfoModal = (movie: Movie): void => {
     setSelectedMovie(movie);
     setIsModalOpen(true);
   };
@@ -98,16 +137,16 @@ const MainContainer = () => {
         {isLoading ? <p>Loading...</p> : null}
         {isError ? <p>{isError}</p> : null}
       </div>
-    <SearchBar movies={movies} filteredMovies={filteredMovies} setFilteredMovies={setFilteredMovies} searchInput={searchInput} setSearchInput={setSearchInput} />
+      <SearchBar searchInput={searchInput} setSearchInput={setSearchInput} />
       <div className="content">
         <div className="genre-panel">
-          <GenrePanel masterGenre={masterGenre} setMasterGenre={setMasterGenre} movies={movies} filteredMovies={filteredMovies} setFilteredMovies={setFilteredMovies} />
+          <GenrePanel masterGenre={masterGenre} setMasterGenre={setMasterGenre} />
         </div>
         <div className="movie-container">
             {filteredMovies.length === 0 ? (
-            <div>
-              <img src={require(`../assets/img/sad-cat.png`)} alt="Sad Cat" />
-              <p>No movies are found, try again...</p>
+            <div className="sad-cat-container">
+              <img src={require(`../assets/img/sad-cat.png`)} alt="Sad Cat" className="sad-cat-img" />
+              <p className="not-found-msg">No movies are found, try again...</p>
             </div>
             )
              : movieContainer}

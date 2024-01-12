@@ -23,15 +23,15 @@ const InfoModal: React.FC<InfoModalProps> = ({ selectedMovie, setSelectedMovie, 
     try {
       modalMovieImage = <img src={require(`../assets/img/wide/${selectedMovie.id}.jpeg`)} alt={selectedMovie.title} className="modal-picture" />
     } catch (e) {
-     modalMovieImage = <img src={require(`../assets/img/poster/defaultImage.jpeg`)} alt={selectedMovie.title} className="modal-picture" />
+      modalMovieImage = <img src={require(`../assets/img/poster/defaultImage.jpeg`)} alt={selectedMovie.title} className="modal-picture" />
     };
   };
   displayPicture();
   
   //Render a genre for each genre in selectedMovie
-  const displayGenres: JSX.Element[] = selectedMovie.genres.map((genre) => {
+  const displayGenres: JSX.Element[] = selectedMovie.genres.map((genre, index) => {
     return (
-      <div key={genre} className="modal-genre">{genre}</div>
+      <div key={index} className="modal-genre">{genre}</div>
     )
   });
 

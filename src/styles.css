@@ -178,7 +178,7 @@ body {
   font-weight: bold;
   cursor: pointer;
   background-color: var(--font-color);
-  transition: background-color 0.2s;
+  border-radius: 5px;
   margin-left: auto;
 }
 
@@ -194,21 +194,40 @@ body {
 
 /* Styles for the search bar */
 .search-container {
-  margin-bottom: 20px;
   text-align: center;
   width: 100%;
-  display: flex;
-  justify-content: center;
+  padding: 10px;
+  margin-bottom: 20px;
 }
 
 .search-input {
-  height: 40px;
-}
-
-.search-bar input {
   width: 80%;
-  font-size: medium;
-  padding: 10px;
+  max-width: 600px;
+  font-size: 1rem;
+  padding: 10px 15px;
+  display:block;
   border: 1px solid #ccc;
   border-radius: 5px;
+  margin: 0 auto;
 }
+
+/*Styles for sad cat and no movies found message */
+.sad-cat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 20px;
+  width: 100%
+}
+
+.sad-cat-img {
+  max-width: 400px;
+  display: block;
+}
+
+.not-found-msg {
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
