@@ -63,7 +63,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  max-height: 400px;
+  max-height: 430px;
 }
 
 /* Styles for the movie header */
