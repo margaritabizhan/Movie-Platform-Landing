@@ -57,13 +57,13 @@ body {
   padding: 20px;
 }
 
-/* Styles for individual movie items */
+/* Styles for movie container */
 .movie-container {
-  flex: 3;
+  /* flex: 3; */
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  max-height: 430px;
+  max-height: 450px;
 }
 
 /* Styles for the movie header */
@@ -74,14 +74,27 @@ body {
   margin-bottom: 20px;
 }
 
-/* Styles for movie items */
+/* Styles for individual movie items */
 .movie-item {
-  flex: 0 0 calc(33.33% - 20px);
+  flex: 1 0 calc(33.33% - 20px);
   background-color: #29223c;
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 150px;
+}
+
+@media (max-width: 768px) {
+  .movie-item {
+    flex: 1 0 calc(50% - 20px); /* Adjust for 2 items per row */
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-item {
+    flex: 1 0 100%; /* Full width for very small screens */
+  }
 }
 
 /* Styles for movie titles */
@@ -144,7 +157,7 @@ body {
   margin-right: auto;
   margin-top: 50px;
   width: 70%;
-  height: 80%;
+  height: 87%;
   background-color: rgb(19, 19, 48);
   border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -187,7 +200,7 @@ body {
 }
 
 .modal-picture {
-  max-width: 100%;
+  max-width: 95%;
   max-height: auto;
   object-fit: cover;
 }
