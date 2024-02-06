@@ -16,10 +16,9 @@ const MainContainer: React.FC = () => {
 
   //Fetch all movies from API
   const fetchAllMovies = async (): Promise<void> => {
-    const headers: Header = {'Authorization': 'Api-Key q3MNxtfep8Gt'};
     
     try {
-    const response = await fetch('https://code-challenge.spectrumtoolbox.com/api/movies', { headers });
+    const response = await fetch('https://margaritabizhan-movieapp.s3.amazonaws.com/movie-list.json', {});
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     };
