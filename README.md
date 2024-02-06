@@ -1,10 +1,12 @@
 # 🍿 Movie Viewing React App 🍿
-Check out my landing page for a movie platform. A user can filter movies by genre or search by title.
-Click ⓘ for additional movie info.
-If no movies are found you'll see a mean cat 😼
-Some movie images are intentionally left out, the application displays a default image instead.
+Check out my landing page for a movie platform: <br>
+https://movie-platform-landing-margaritabizhans-projects.vercel.app/
 
-Check it out here:
+A user can filter movies by genre or search by title.<br>
+Click ⓘ for additional movie info.<br>
+If no movies are found you'll see a mean cat 😼<br>
+Some movie images are intentionally left out, the application displays a default image instead.<br>
+The movie list is stored in AWS S3.<br>
 
 
 ## Available Scripts
